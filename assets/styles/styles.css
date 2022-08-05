@@ -1,0 +1,192 @@
+body{
+    background: #15171e;
+}
+.slogo{
+    width: 11rem;
+}
+header{
+    min-height: 10vh;
+}
+.collapse{
+    display: flex;
+    justify-content: end;
+}
+.mc-1{
+    border-bottom: 0.01rem solid #cdcdcd;
+}
+
+label, .nav-link{
+    
+    color: rgb(253, 231, 244);
+}
+.actbtn{
+    border-bottom: 0.15rem solid rgb(217 3 104);
+}
+.bgb,th {
+    background-color: rgb(217 3 104);
+}
+th{
+    background-color: rgb(198, 25, 106) !important;
+}
+main{
+    min-height: 80vh;
+}
+
+.img-ca{
+    object-position: center;
+    object-fit: cover;
+    height: 10rem;
+}
+.bg-btn{
+    background-image: url(../img/search.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 0.01rem solid rgb(217 3 104);
+}
+.bton{
+    width: 16rem;
+    border: 0.01rem solid rgb(217 3 104);
+}
+.card{
+    width: 16rem;
+    height: 23rem;
+    text-align: justify;
+    background-color: #28292f;
+    color: #b2b2b2;
+    border-radius: 0.8rem;
+    box-shadow: -2px -2px 24px 1px rgba(0, 0, 0, 0.66);
+    
+}
+.card p{
+    line-height: 1.3rem;
+}
+.card-img-personal{
+    width: 100%;
+    height: 10rem;
+    object-fit: cover;
+    border-radius: 0.8rem 0.8rem 0 0;
+}
+.card .fs-date{
+    font-size: 0.9rem;
+}
+.card-details{
+    width: 40rem;
+    display: flex;
+    background-color: #24252e;
+    color: #b2b2b2;
+    box-shadow: -2px -2px 24px 1px rgba(14, 13, 13, 0.66);
+}
+.card-img-personal-details{
+    width: 50%;
+    height: 20rem;
+    object-fit: cover;
+    object-position: center;
+
+}
+
+.card-body-details{
+    width: 20rem;
+    height: 20rem;
+}
+
+.bg-table{
+    background-color: #24252e;
+}
+footer{
+    min-height: 10vh;
+    background-color: rgb(19, 19, 19);
+}
+.social-media{
+    width: 2.2rem;
+    border-radius: 50%;
+}
+.form-style{
+    max-width: 40rem;
+    background-color: #24252e;
+    box-shadow: -2px -2px 24px 1px rgba(14, 13, 13, 0.66);
+}
+.c-table-style{
+    max-width: 70rem;
+}
+tr{
+    height: 1.5rem;
+}
+td,th,tr{
+    padding: 0.4rem !important;
+}
+.columns{
+    width: 40%;
+}
+fieldset{
+    background-color:rgb(217 3 104) ;
+    border: 0.01rem solid rgb(217 3 104) !important;;
+}
+.hcarrusel{
+    height: 6rem;
+    background-color: rgb(19, 19, 19);
+}
+.carrusel1, .carrusel2, .carrusel3{
+    height: 6rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.carrusel1{
+    background-image: url('https://st2.depositphotos.com/1594308/5547/i/450/depositphotos_55474203-stock-photo-friends-dancing-at-party.jpg');
+}
+.carrusel2{
+    background-image: url('https://as2.ftcdn.net/v2/jpg/02/39/98/29/1000_F_239982949_JpnIJrL0r9qXaI6YzCh25XIPgHiL5JoE.jpg');
+}
+.carrusel3{
+    background-image: url('https://st3.depositphotos.com/9880800/16572/i/1600/depositphotos_165724742-free-stock-photo-barman-mixing-cocktail.jpg');
+}
+a:hover{
+    color: whitesmoke !important ;
+}
+.message{
+    width: 30rem;
+    font-size: 2rem;
+    color: aliceblue;
+    margin: 4rem auto;
+    text-align: center;
+}
+.price{
+    text-align: center;
+    width: 6rem;
+    border-radius: 0.5rem;
+    background-color: rgb(217 3 104);
+    color: aliceblue;
+    font-weight: bold;
+}
+.card-body-details:hover{
+    border: 0.1px solid white;
+}
+@media screen and (max-width:992px){
+    .collapse{
+        justify-content: flex-start;
+    }
+
+} 
+@media screen and (max-width:663px){
+    .card-details{
+        width: 95%;
+        height: 40rem;
+    }
+    .card-img-personal-details{
+        width: 100%;
+        height: 40%;
+        object-fit: cover !important;
+    }
+    .card-body-details{
+        width: 100%;
+    }
+    .contact-w{
+        width: 95% !important;
+    }
+    #carouselExampleDark {
+        display: none;
+    }
+}
