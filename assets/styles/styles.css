@@ -31,7 +31,10 @@ th{
 main{
     min-height: 80vh;
 }
-
+.forms{
+    display: flex;
+    justify-content: space-around;
+}
 .img-ca{
     object-position: center;
     object-fit: cover;
@@ -47,8 +50,7 @@ main{
     border: 0.01rem solid rgb(217 3 104);
 }
 .bton{
-    width: 16rem;
-    border: 0.01rem solid rgb(217 3 104);
+    width: 24rem;
 }
 .card{
     width: 16rem;
@@ -121,8 +123,12 @@ td,th,tr{
     width: 40%;
 }
 fieldset{
-    background-color:rgb(217 3 104) ;
-    border: 0.01rem solid rgb(217 3 104) !important;;
+    margin: 0.5rem 0 0.5rem 0;
+}
+.label{
+    font-size: 1.2rem;
+    padding: 0.2rem;
+    border-radius: 0.3rem;
 }
 .hcarrusel{
     height: 6rem;
@@ -147,11 +153,18 @@ a:hover{
     color: whitesmoke !important ;
 }
 .message{
-    width: 30rem;
+    width: 100%;
     font-size: 2rem;
     color: aliceblue;
     margin: 4rem auto;
     text-align: center;
+}
+.img-search{
+    width: 20rem;
+    height: 11rem;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 0 0 8rem 8rem;
 }
 .price{
     text-align: center;
@@ -161,15 +174,37 @@ a:hover{
     color: aliceblue;
     font-weight: bold;
 }
-.card-body-details:hover{
-    border: 0.1px solid white;
+.dropdown-menu{
+    width: 12rem;
+    background-color: #1a151bef;
 }
+.checkboxes input {
+    width: 1.3rem;
+    height: 1.3rem;
+}
+body::-webkit-scrollbar {
+    width: 0.3rem;               
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: rgb(206, 198, 226);       
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background-color:  rgb(217 3 104);   
+    border-radius: 1.2rem;       
+  }
 @media screen and (max-width:992px){
     .collapse{
         justify-content: flex-start;
     }
 
 } 
+@media screen and (max-width:670px) {
+    .bton{
+        width: 16rem;
+    } 
+}
 @media screen and (max-width:663px){
     .card-details{
         width: 95%;
@@ -188,5 +223,11 @@ a:hover{
     }
     #carouselExampleDark {
         display: none;
+    } 
+}
+@media screen and (max-width:446px){
+    .checkboxes{
+        order: 1;
     }
+    
 }
