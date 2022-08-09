@@ -1,6 +1,5 @@
 let cardsContainerPastEvents = document.getElementById('cardContainerPastEvents')
 let form = document.forms
-let cardsContainer = document.getElementById("cardContainerIndex")
 let submit = document.querySelector('input[type="submit"]')
 let inputText = document.querySelector('input[type="search"]')
 let url = 'https://amazing-events.herokuapp.com/api/events'
@@ -9,7 +8,7 @@ async function fetchData(urlApi){
         let response = await fetch(urlApi)
         let data = await response.json()
         let dataEvents = data.events.filter(item => item.date < data.currentDate)
-        categories(dataEvents)
+        categories(data.events)
         createCards(dataEvents)
         filters(dataEvents)
     }catch(err){
@@ -61,12 +60,13 @@ function filtrarCategoriasCheckeadas(arrayEventos) {
 }
 function message() {
     let message = document.createElement('p')
-    message.textContent = "Event not found, adjust search filter";
-    message.className = "message";
+        message.textContent = "Event not found, adjust search filter";
+        message.className = "message";
+        cardsContainerPastEvents.appendChild(message)
     let imgSearch = document.createElement('img')
-    imgSearch.src = "https://i.ibb.co/c197gp5/searching.png"
-    imgSearch.className = "img-search"
-    cardsContainerPastEvents.append(message,imgSearch)
+        imgSearch.src = "https://i.ibb.co/c197gp5/searching.png"
+        imgSearch.className = "img-search"
+        cardsContainerPastEvents.append(message,imgSearch)
 }
 function createCards(arrayEventsFiltereds){
     cardsContainerPastEvents.innerHTML = ""
