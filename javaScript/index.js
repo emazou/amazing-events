@@ -1,15 +1,18 @@
 let form = document.forms
 let cardsContainer = document.getElementById("cardContainerIndex")
-let url = 'https://amazing-events.herokuapp.com/api/events'
 let submit = document.querySelector('input[type="submit"]')
 let inputText = document.querySelector('input[type="search"]')
+let url = 'https://amazing-events.herokuapp.com/api/events'
 async function fetchData(urlApi){
-    let response = await fetch(urlApi)
-    let data = await response.json()
-    let dataEvents = data.events
-    categories(dataEvents)
-    createCards(dataEvents)
-    filters(dataEvents)
+    try{
+        let response = await fetch(urlApi)
+        let data = await response.json()
+        categories(data.events)
+        createCards(data.events)
+        filters(data.events)
+    }catch(err){
+        console.log(err)
+    }
 }
 fetchData(url)
 function categories(arrayEvents) {
@@ -53,7 +56,6 @@ function filters(events){
         createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
     })
 }
-
 function message(){
     let message = document.createElement('p')
         message.textContent = "Event not found, adjust search filter";
