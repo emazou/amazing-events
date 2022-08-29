@@ -1,10 +1,23 @@
 let cardsContainerPastEvents = document.getElementById('cardContainerPastEvents')
-let pastEvents = data.events.filter(item => item.date < data.currentDate)
 let form = document.forms
-let cardsContainer = document.getElementById("cardContainerIndex")
 let submit = document.querySelector('input[type="submit"]')
 let inputText = document.querySelector('input[type="search"]')
+let url = 'https://amazing-events.herokuapp.com/api/events'
+async function fetchData(urlApi){
+    try{
+        let response = await fetch(urlApi)
+        let data = await response.json()
+        let dataEvents = data.events.filter(item => item.date < data.currentDate)
+        categories(data.events)
+        createCards(dataEvents)
+        filters(dataEvents)
+    }catch(err){
+        console.log(err)
+    }
+}
+fetchData(url)
 function categories(arrayEvents) {
+    let checkboxescontainer = document.querySelector("#cbc")
     let arrayCategories = []
     arrayEvents.forEach(event => {
         if (!arrayCategories.includes(event.category)) {
@@ -14,24 +27,23 @@ function categories(arrayEvents) {
     arrayCategories.forEach(category => {
         let fieldset = document.createElement('fieldset')
         fieldset.className = 'px-2 rounded-4'
-        fieldset.innerHTML = `<input type="checkbox" name="${category}" class="categories" value="${category}" id="${category}">
-        <label for="${category}">${category}</label>`
-        form[0].appendChild(fieldset)
+        fieldset.innerHTML = `<input type="checkbox" name="${category}" class="categories check" value="${category}" id="${category}">
+        <label class="label" for="${category}">${category}</label>`
+        checkboxescontainer.appendChild(fieldset)
     })
 }
-categories(data.events)
-createCards(pastEvents)
-form[0].addEventListener('change', (e) => {
-    e.preventDefault()
-    createCards(filtrarCategoriasCheckeadas(searchText(inputText.value, pastEvents)))
-})
-submit.addEventListener('click', (e) => {
-    e.preventDefault()
-    createCards(filtrarCategoriasCheckeadas(searchText(inputText.value, pastEvents)))
-})
-inputText.addEventListener('keyup', () => {
-    createCards(filtrarCategoriasCheckeadas(searchText(inputText.value, pastEvents)))
-})
+function filters(events){
+    form[0].addEventListener('change',()=>{
+        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
+    })
+    submit.addEventListener('click',(e)=>{
+        e.preventDefault()
+        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
+    })
+    inputText.addEventListener('keyup',()=>{
+        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
+    })
+}
 function searchText(textoABuscar, arrayEventosDondeVoyABuscar) {
     let arrayEventosFiltradosSearch = arrayEventosDondeVoyABuscar.filter(evento => evento.name.toLowerCase().includes(textoABuscar.toLowerCase()))
     return arrayEventosFiltradosSearch
@@ -48,9 +60,13 @@ function filtrarCategoriasCheckeadas(arrayEventos) {
 }
 function message() {
     let message = document.createElement('p')
-    message.textContent = "Event not found, adjust search filter";
-    message.className = "message";
-    cardsContainerPastEvents.appendChild(message)
+        message.textContent = "Event not found, adjust search filter";
+        message.className = "message";
+        cardsContainerPastEvents.appendChild(message)
+    let imgSearch = document.createElement('img')
+        imgSearch.src = "https://i.ibb.co/c197gp5/searching.png"
+        imgSearch.className = "img-search"
+        cardsContainerPastEvents.append(message,imgSearch)
 }
 function createCards(arrayEventsFiltereds) {
     cardsContainerPastEvents.innerHTML = ""
