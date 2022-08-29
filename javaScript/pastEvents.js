@@ -1,5 +1,4 @@
 let cardsContainerPastEvents = document.getElementById('cardContainerPastEvents')
-let cardsContainerUpComingEvents = document.getElementById('cardContainerUpComingEvents')
 let pastEvents = data.events.filter(item => item.date < data.currentDate)
 let form = document.forms
 let cardsContainer = document.getElementById("cardContainerIndex")
@@ -53,7 +52,7 @@ function message() {
     message.className = "message";
     cardsContainerPastEvents.appendChild(message)
 }
-function createCards(arrayEventsFiltereds){
+function createCards(arrayEventsFiltereds) {
     cardsContainerPastEvents.innerHTML = ""
     arrayEventsFiltereds.forEach(element => {
         let card = document.createElement('div')
