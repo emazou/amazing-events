@@ -1,21 +1,21 @@
 let url = 'https://amazing-events.herokuapp.com/api/events'
-async function fetchData(urlApi){
-    try{
+async function fetchData(urlApi) {
+    try {
         let response = await fetch(urlApi)
         let data = await response.json()
         let dataEvents = data.events
         details(dataEvents)
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 }
 fetchData(url)
-function details(events){
-    const params = new URLSearchParams(location.search)  
+function details(events) {
+    const params = new URLSearchParams(location.search)
     const id = params.get('id')
-    let detailEvent = events.find(event => event._id === id )
+    let detailEvent = events.find(event => event._id === id)
     let cardDetail = document.querySelector('.card-details')
-    cardDetail.innerHTML =`<img src="${detailEvent.image}" class="card-img-personal-details p-2" alt="Card" />
+    cardDetail.innerHTML = `<img src="${detailEvent.image}" class="card-img-personal-details p-2" alt="Card" />
     <div class="card-body-details p-3 d-flex flex-column">
         <h5 class="card-title text-center text-light">${detailEvent.name}</h5>
         <p class="text-end my-2 date">${detailEvent.date}</p>

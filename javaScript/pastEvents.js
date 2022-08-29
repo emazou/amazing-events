@@ -3,15 +3,15 @@ let form = document.forms
 let submit = document.querySelector('input[type="submit"]')
 let inputText = document.querySelector('input[type="search"]')
 let url = 'https://amazing-events.herokuapp.com/api/events'
-async function fetchData(urlApi){
-    try{
+async function fetchData(urlApi) {
+    try {
         let response = await fetch(urlApi)
         let data = await response.json()
         let dataEvents = data.events.filter(item => item.date < data.currentDate)
         categories(data.events)
         createCards(dataEvents)
         filters(dataEvents)
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 }
@@ -32,16 +32,16 @@ function categories(arrayEvents) {
         checkboxescontainer.appendChild(fieldset)
     })
 }
-function filters(events){
-    form[0].addEventListener('change',()=>{
-        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
+function filters(events) {
+    form[0].addEventListener('change', () => {
+        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value, events)))
     })
-    submit.addEventListener('click',(e)=>{
+    submit.addEventListener('click', (e) => {
         e.preventDefault()
-        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
+        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value, events)))
     })
-    inputText.addEventListener('keyup',()=>{
-        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
+    inputText.addEventListener('keyup', () => {
+        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value, events)))
     })
 }
 function searchText(textoABuscar, arrayEventosDondeVoyABuscar) {
@@ -60,13 +60,13 @@ function filtrarCategoriasCheckeadas(arrayEventos) {
 }
 function message() {
     let message = document.createElement('p')
-        message.textContent = "Event not found, adjust search filter";
-        message.className = "message";
-        cardsContainerPastEvents.appendChild(message)
+    message.textContent = "Event not found, adjust search filter";
+    message.className = "message";
+    cardsContainerPastEvents.appendChild(message)
     let imgSearch = document.createElement('img')
-        imgSearch.src = "https://i.ibb.co/c197gp5/searching.png"
-        imgSearch.className = "img-search"
-        cardsContainerPastEvents.append(message,imgSearch)
+    imgSearch.src = "https://i.ibb.co/c197gp5/searching.png"
+    imgSearch.className = "img-search"
+    cardsContainerPastEvents.append(message, imgSearch)
 }
 function createCards(arrayEventsFiltereds) {
     cardsContainerPastEvents.innerHTML = ""
