@@ -1,81 +1,78 @@
 let eventsTable = document.getElementById("eventsTable")
-let upComingEventsTable = document.getElementById("upComingEventsTable") 
+let upComingEventsTable = document.getElementById("upComingEventsTable")
 let pastEventsTable = document.getElementById("pastEventsTable")
 let url = 'https://amazing-events.herokuapp.com/api/events'
-async function fetchData(urlApi){
-    try{
+async function fetchData(urlApi) {
+    try {
         let response = await fetch(urlApi)
         let data = await response.json()
         let dataEvents = data.events
-        firstTable(eventsTable,dataEvents)
-        createTableBody(statisticsCategory(pastEvents(dataEvents,data.currentDate)),pastEventsTable)
-        createTableBody(statisticsCategory(upComingEvents(dataEvents,data.currentDate)),upComingEventsTable)
-    }catch(err){
+        firstTable(eventsTable, dataEvents)
+        createTableBody(statisticsCategory(pastEvents(dataEvents, data.currentDate)), pastEventsTable)
+        createTableBody(statisticsCategory(upComingEvents(dataEvents, data.currentDate)), upComingEventsTable)
+    } catch (err) {
         console.log(err)
     }
 }
 fetchData(url)
-function morePorcentage(arrayEvents) {
+function percentage(capacity, assistance) {
+    return (parseFloat(assistance) * 100) / parseFloat(capacity)
+}
+function morepercentage(arrayEvents) {
     let eventName;
-    let max = porcentage(parseFloat(arrayEvents[0].capacity),(arrayEvents[0].assistance)) 
-    arrayEvents.forEach(event =>{
-        let porcentage = ((event.assistance) * 100) / event.capacity 
-        if(porcentage > max){
-            max = porcentage
+    let max = percentage(parseFloat(arrayEvents[0].capacity), (arrayEvents[0].assistance))
+    arrayEvents.forEach(event => {
+        if (percentage(event.capacity, event.assistance) > max) {
+            max = percentage(event.capacity, event.assistance)
             eventName = event.name
         }
     })
-    return {name:eventName, porcentage:max}
+    return { name: eventName, percentage: max }
 }
-function lowestPorcentage(arrayEvents) {
+function lowestpercentage(arrayEvents) {
     let eventName;
-    let min = porcentage(parseFloat(arrayEvents[0].capacity),(arrayEvents[0].assistance)) 
-    arrayEvents.forEach(event =>{
-        let porcentage = ((event.assistance) * 100) / event.capacity 
-        if(porcentage < min){
-            min = porcentage
+    let min = percentage(parseFloat(arrayEvents[0].capacity), (arrayEvents[0].assistance))
+    arrayEvents.forEach(event => {
+        if (percentage(event.capacity, event.assistance) < min) {
+            min = percentage(event.capacity, event.assistance)
             eventName = event.name
         }
     })
-    return {name:eventName, porcentage:min}
+    return { name: eventName, percentage: min }
 }
-function moreCapacity(arrayEvents){
+function moreCapacity(arrayEvents) {
     return arrayEvents.sort((a, b) => b.capacity - a.capacity)[0]
 }
-function firstTable(node,arrayEvents){
+function firstTable(node, arrayEvents) {
     let tr = document.createElement('tr')
-    tr.innerHTML = `<td>${morePorcentage(arrayEvents).name} : ${morePorcentage(arrayEvents).porcentage}%</td>
-                    <td>${lowestPorcentage(arrayEvents).name} : ${lowestPorcentage(arrayEvents).porcentage}%</td>
+    tr.innerHTML = `<td>${morepercentage(arrayEvents).name} : ${morepercentage(arrayEvents).percentage}%</td>
+                    <td>${lowestpercentage(arrayEvents).name} : ${lowestpercentage(arrayEvents).percentage}%</td>
                     <td>${moreCapacity(arrayEvents).name} : ${moreCapacity(arrayEvents).capacity} people</td>`
     node.appendChild(tr)
 }
-function upComingEvents(arrayEvents,date){
+function upComingEvents(arrayEvents, date) {
     return arrayEvents.filter(item => item.date > date)
 }
-function pastEvents(arrayEvents,date){
+function pastEvents(arrayEvents, date) {
     return arrayEvents.filter(item => item.date < date)
 }
-function porcentage(capacity,assistance){ 
-    return (parseFloat(assistance) * 100)/parseFloat(capacity)
-}
-function statisticsCategory(arrayEvents){
+function statisticsCategory(arrayEvents) {
     let arrayObjectStatisticsForCategory = []
-    for(let item = 0; item < categories(arrayEvents).length; item++){
-        let arrayFilteredForCategory = arrayEvents.filter(event => event.category == categories(arrayEvents)[item])
+    categories(arrayEvents).forEach(category => {
+        let arrayFilteredForCategory = arrayEvents.filter(event => event.category == category)
         let revenuesForCategory = Math.round(revenues(arrayFilteredForCategory) / arrayFilteredForCategory.length)
-        let porcentageEvent = []
-        arrayFilteredForCategory.forEach(event=>{
-            porcentageEvent.push(Math.round(porcentage(event.capacity, event.assistance || event.estimate)))
+        let percentageEvent = []
+        arrayFilteredForCategory.forEach(event => {
+            percentageEvent.push(Math.round(percentage(event.capacity, event.assistance || event.estimate)))
         })
-        let porcentageCategory = (porcentageEvent.reduce((sum,porcentage) => sum + porcentage,0) / porcentageEvent.length).toFixed(2)
-        console.log(porcentageCategory)
+        let percentageCategory = (percentageEvent.reduce((sum, percentage) => sum + percentage, 0) / percentageEvent.length).toFixed(2)
         let categoryStatistics = {
-            category: categories(arrayEvents)[item],
+            category: category,
             revenues: revenuesForCategory,
-            porcentage: porcentageCategory
+            percentage: percentageCategory
         }
         arrayObjectStatisticsForCategory.push(categoryStatistics)
-    }
+    })
     return arrayObjectStatisticsForCategory
 }
 function categories(arrayEvents) {
@@ -87,18 +84,17 @@ function categories(arrayEvents) {
     })
     return arrayCategories
 }
-function revenues(arrayEventsCategory){
-    return arrayEventsCategory.reduce((sum , element) => sum + element.price * (parseFloat(element.assistance) || parseFloat(element.estimate)) , 0)
+function revenues(arrayEventsCategory) {
+    return arrayEventsCategory.reduce((sum, event) => sum + event.price * (parseFloat(event.assistance) || parseFloat(event.estimate)), 0)
 }
-function createTableBody(arrayObjects,node){
-    arrayObjects.forEach(element =>{
+function createTableBody(arrayObjects, node) {
+    arrayObjects.forEach(element => {
         let tr = document.createElement('tr')
         tr.innerHTML = `
                         <td>${element.category}</td>
                         <td>$${element.revenues}</td>
-                        <td>${element.porcentage}%</td>
+                        <td>${element.percentage}%</td>
         `
         node.appendChild(tr)
     })
-    
 }

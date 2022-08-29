@@ -3,15 +3,15 @@ let form = document.forms
 let submit = document.querySelector('input[type="submit"]')
 let inputText = document.querySelector('input[type="search"]')
 let url = 'https://amazing-events.herokuapp.com/api/events'
-async function fetchData(urlApi){
-    try{
+async function fetchData(urlApi) {
+    try {
         let response = await fetch(urlApi)
         let data = await response.json()
         let dataEvents = data.events.filter(item => item.date > data.currentDate)
         categories(data.events)
         createCards(dataEvents)
         filters(dataEvents)
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 }
@@ -32,41 +32,41 @@ function categories(arrayEvents) {
         checkboxescontainer.appendChild(fieldset)
     })
 }
-function filters(events){
-    form[0].addEventListener('change',()=>{
-        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
+function filters(events) {
+    form[0].addEventListener('change', () => {
+        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value, events)))
     })
-    submit.addEventListener('click',(e)=>{
+    submit.addEventListener('click', (e) => {
         e.preventDefault()
-        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
+        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value, events)))
     })
-    inputText.addEventListener('keyup',()=>{
-        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value,events)))
+    inputText.addEventListener('keyup', () => {
+        createCards(filtrarCategoriasCheckeadas(searchText(inputText.value, events)))
     })
 }
-function searchText(textoABuscar,arrayEventosDondeVoyABuscar){
+function searchText(textoABuscar, arrayEventosDondeVoyABuscar) {
     let arrayEventosFiltradosSearch = arrayEventosDondeVoyABuscar.filter(evento => evento.name.toLowerCase().includes(textoABuscar.toLowerCase()))
     return arrayEventosFiltradosSearch
 }
-function filtrarCategoriasCheckeadas(arrayEventos){
+function filtrarCategoriasCheckeadas(arrayEventos) {
     let nodeListCheckbox = document.querySelectorAll('input[type="checkbox"]')
     let checkboxes = Array.from(nodeListCheckbox).filter(checkbox => checkbox.checked).map(check => check.value)
     console.log(checkboxes)
-    if(checkboxes.length>0){
+    if (checkboxes.length > 0) {
         let arrayEventosFiltradosPorCategorias = arrayEventos.filter(evento => checkboxes.includes(evento.category))
         return arrayEventosFiltradosPorCategorias
     }
     return arrayEventos
 }
-function message(){
+function message() {
     let message = document.createElement('p')
-        message.textContent = "Event not found, adjust search filter";
-        message.className = "message";
-        cardsContainerUpComingEvents.appendChild(message)
+    message.textContent = "Event not found, adjust search filter";
+    message.className = "message";
+    cardsContainerUpComingEvents.appendChild(message)
     let imgSearch = document.createElement('img')
-        imgSearch.src = "https://i.ibb.co/c197gp5/searching.png"
-        imgSearch.className = "img-search"
-        cardsContainerUpComingEvents.append(message,imgSearch)
+    imgSearch.src = "https://i.ibb.co/c197gp5/searching.png"
+    imgSearch.className = "img-search"
+    cardsContainerUpComingEvents.append(message, imgSearch)
 }
 function createCards(arrayEventsFiltereds) {
     cardsContainerUpComingEvents.innerHTML = ""
@@ -86,7 +86,7 @@ function createCards(arrayEventsFiltereds) {
                     </div>`
         cardsContainerUpComingEvents.appendChild(card)
     })
-    if(arrayEventsFiltereds.length ===0 ){
+    if (arrayEventsFiltereds.length === 0) {
         message()
     }
 }
