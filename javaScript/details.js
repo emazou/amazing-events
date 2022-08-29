@@ -31,4 +31,3 @@ function details(events){
         <p class="mt-3 price fs-5 align-self-center">$${detailEvent.price}</p>
     </div>`
 }
->>>>>>> 7a38f3e57f7e5dd09d28e1e0ba1b17317957c326
